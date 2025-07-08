@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiran Xettry | Official</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap');
+        :root {
+            --primary: #8A2BE2;
+            --secondary: #00BFFF;
+            --dark: #0a0a14;
+            --light: #F7FAFC;
+            --glass-bg: rgba(20, 10, 40, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glow-color: rgba(138, 43, 226, 0.7);
+            --important-message-bg: rgba(220, 38, 38, 0.8);
+            --important-message-border: rgba(255, 100, 100, 0.5);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            /* Centering for Desktop */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            padding: 2.5rem 3rem;
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            border: 1.5px solid var(--glass-border);
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInContainer 1s .5s ease forwards;
+            margin: 2rem 0; /* Margin for desktop */
+        }
+        @keyframes fadeInContainer {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo-container {
+            margin: 0 auto 1.5rem;
+            width: 130px;
+            height: 130px;
+            position: relative;
+        }
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--light);
+            box-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--glow-color);
+            transition: transform .4s ease-in-out;
+            animation: pulse 2.5s infinite;
+        }
+        .logo-img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--glow-color); }
+            50% { box-shadow: 0 0 30px var(--glow-color), 0 0 45px var(--glow-color); }
+            100% { box-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--glow-color); }
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: .5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+        
+        .animated-text {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            height: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cursor {
+            display: inline-block;
+            background-color: var(--secondary);
+            margin-left: 0.1rem;
+            width: 3px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { background-color: var(--secondary); }
+            50% { background-color: transparent; }
+        }
+        
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        .search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            background-color: rgba(0,0,0,0.3);
+            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .link-item {
+            background: transparent;
+            padding: .9rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--glass-border);
+            transition: all .3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .link-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, var(--glow-color), transparent);
+            transition: left .5s ease;
+        }
+        .link-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--glow-color);
+            transform: translateY(-5px) scale(1.02);
+        }
+        .link-item:hover::before { left: 100%; }
+        .link-item i { margin-right: 12px; font-size: 1.3rem; transition: transform .3s ease; }
+        .link-item:hover i { transform: scale(1.2); }
+        
+        .important-message {
+            background-color: var(--important-message-bg);
+            color: var(--light);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid var(--important-message-border);
+            display: none;
+        }
+        .important-message i { margin-right: 10px; }
+        
+        /* AMAZING Full-Screen Mobile View */
+        @media (max-width: 768px) {
+            body {
+                /* Remove alignment for mobile to allow full-screen container */
+                display: block; 
+            }
+            .container {
+                width: 100%;
+                min-height: 100vh;
+                max-width: 100%;
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
+                margin: 0;
+                /* Adjust padding for a better mobile feel */
+                padding: 3rem 1.5rem; 
+                animation: none; /* Disable fade-in for instant load on mobile */
+                opacity: 1;
+                transform: none;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .animated-text {
+                font-size: 1rem;
+            }
+            .logo-container {
+                width: 110px;
+                height: 110px;
+            }
+        }
+    </style>
+    <!-- External Dependencies: All loaded from CDNs, perfect for GitHub Pages -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://i.ibb.co/7j7pZ66/kx-logo.png" alt="Kiran Xettry Logo" class="logo-img" id="logo-img">
+        </div>
+
+        <h1 id="main-name">KIRAN XETTRY</h1>
+
+        <div class="important-message" id="important-message-box"></div>
+        
+        <div class="animated-text">
+            <span id="typed-text"></span>
+            <span class="cursor"></span>
+        </div>
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" id="link-search" placeholder="Search links...">
+        </div>
+
+        <div class="links" id="links-container">
+            <!-- Links will be loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Firebase SDKs are also loaded from CDNs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAeu1ePigv3knG5J97-16h1a_koo4H9fGI",
+            authDomain: "news-d99fe.firebaseapp.com",
+            databaseURL: "https://news-d99fe-default-rtdb.firebaseio.com",
+            projectId: "news-d99fe",
+            storageBucket: "news-d99fe.appspot.com",
+            messagingSenderId: "257868939041",
+            appId: "1:257868939041:web:930b6e19f2db2052370860",
+            measurementId: "G-EEEXBZWESK"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const portfolioRef = db.collection('portfolio').doc('main_config');
+
+        portfolioRef.onSnapshot(doc => {
+            if (doc.exists) {
+                updatePageContent(doc.data());
+            } else {
+                console.log("No config data found in Firebase!");
+            }
+        }, err => console.error("Error fetching config data: ", err));
+
+        document.getElementById('link-search').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            const links = document.querySelectorAll('.link-item');
+            
+            links.forEach(link => {
+                const linkText = link.dataset.search || '';
+                if (linkText.includes(searchTerm)) {
+                    link.style.display = 'flex';
+                } else {
+                    link.style.display = 'none';
+                }
+            });
+        });
+
+        function updatePageContent(data) {
+            if (data.logoUrl) document.getElementById('logo-img').src = data.logoUrl;
+            
+            const messageBox = document.getElementById('important-message-box');
+            if (data.importantMessage) {
+                messageBox.innerHTML = `<i class="fas fa-bullhorn"></i> ${data.importantMessage}`;
+                messageBox.style.display = 'block';
+            } else {
+                messageBox.style.display = 'none';
+            }
+
+            if (data.animatedTexts && data.animatedTexts.length > 0) {
+                startTypewriter(data.animatedTexts);
+            }
+
+            const linksContainer = document.getElementById('links-container');
+            linksContainer.innerHTML = '';
+            if (data.links && data.links.length > 0) {
+                data.links.forEach(link => {
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.className = 'link-item';
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.innerHTML = `<i class="${link.icon}"></i> ${link.text.toUpperCase()}`;
+                    a.dataset.search = link.text.toLowerCase();
+                    linksContainer.appendChild(a);
+                });
+            }
+        }
+
+        const typedTextSpan = document.getElementById("typed-text");
+        let textArrayIndex = 0;
+        let charIndex = 0;
+        let animatedTextsArray = [];
+        let isTypingPaused = false;
+
+        function startTypewriter(texts) {
+            if (isTypingPaused || (animatedTextsArray.length > 0 && texts.join('') === animatedTextsArray.join(''))) return;
+            animatedTextsArray = texts;
+            isTypingPaused = true;
+            charIndex = 0; textArrayIndex = 0;
+            typedTextSpan.textContent = '';
+            if (animatedTextsArray.length) {
+                setTimeout(() => { isTypingPaused = false; type(); }, 1000);
+            }
+        }
+
+        function type() {
+            if (isTypingPaused || charIndex >= animatedTextsArray[textArrayIndex].length) {
+                setTimeout(erase, 2000);
+                return;
+            }
+            typedTextSpan.textContent += animatedTextsArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, 100);
+        }
+
+        function erase() {
+            if (isTypingPaused || charIndex <= 0) {
+                textArrayIndex = (textArrayIndex + 1) % animatedTextsArray.length;
+                setTimeout(type, 500);
+                return;
+            }
+            typedTextSpan.textContent = animatedTextsArray[textArrayIndex].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(erase, 50);
+        }
+        
+        const canvas = document.getElementById("particle-canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particlesArray;
+        const particleColors = ["#8A2BE2", "#00BFFF", "#FFFFFF"];
+        class Particle{constructor(t,e,i,n,s,o){this.x=t,this.y=e,this.directionX=i,this.directionY=n,this.size=s,this.color=o}draw(){ctx.beginPath(),ctx.arc(this.x,this.y,this.size,0,2*Math.PI,!1),ctx.fillStyle=this.color,ctx.fill()}update(){(this.x>canvas.width||this.x<0)&&(this.directionX=-this.directionX),(this.y>canvas.height||this.y<0)&&(this.directionY=-this.directionY),this.x+=this.directionX,this.y+=this.directionY,this.draw()}}function initParticles(){particlesArray=[];let t=(canvas.height*canvas.width)/9e3;for(let e=0;e<t;e++){let t=2*Math.random()+1,i=Math.random()*(innerWidth-2*t)+t,n=Math.random()*(innerHeight-2*t)+t,s=.4*Math.random()-.2,o=.4*Math.random()-.2,a=particleColors[Math.floor(Math.random()*particleColors.length)];particlesArray.push(new Particle(i,n,s,o,t,a))}}function connectParticles(){let t=1;for(let e=0;e<particlesArray.length;e++)for(let i=e;i<particlesArray.length;i++){let n=(particlesArray[e].x-particlesArray[i].x)*(particlesArray[e].x-particlesArray[i].x)+(particlesArray[e].y-particlesArray[i].y)*(particlesArray[e].y-particlesArray[i].y);n<(canvas.width/7)*(canvas.height/7)&&(t=1-n/2e4,ctx.strokeStyle=`rgba(140, 40, 230, ${t})`,ctx.lineWidth=1,ctx.beginPath(),ctx.moveTo(particlesArray[e].x,particlesArray[e].y),ctx.lineTo(particlesArray[i].x,particlesArray[i].y),ctx.stroke())}}function animateParticles(){requestAnimationFrame(animateParticles),ctx.clearRect(0,0,innerWidth,innerHeight);for(let t=0;t<particlesArray.length;t++)particlesArray[t].update();connectParticles()}window.addEventListener("resize",()=>{canvas.width=innerWidth,canvas.height=innerHeight,initParticles()}),initParticles(),animateParticles();
+    </script>
+</body>
+</html>
