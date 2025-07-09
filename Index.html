@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+,,<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -253,7 +253,7 @@
         
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-input" id="link-search" placeholder="Search links...">
+            <input type="text" class="search-input" id="link-search" placeholder="Search ">
         </div>
 
         <div class="links" id="links-container">
@@ -380,4 +380,4 @@
         class Particle{constructor(t,e,i,n,s,o){this.x=t,this.y=e,this.directionX=i,this.directionY=n,this.size=s,this.color=o}draw(){ctx.beginPath(),ctx.arc(this.x,this.y,this.size,0,2*Math.PI,!1),ctx.fillStyle=this.color,ctx.fill()}update(){(this.x>canvas.width||this.x<0)&&(this.directionX=-this.directionX),(this.y>canvas.height||this.y<0)&&(this.directionY=-this.directionY),this.x+=this.directionX,this.y+=this.directionY,this.draw()}}function initParticles(){particlesArray=[];let t=(canvas.height*canvas.width)/9e3;for(let e=0;e<t;e++){let t=2*Math.random()+1,i=Math.random()*(innerWidth-2*t)+t,n=Math.random()*(innerHeight-2*t)+t,s=.4*Math.random()-.2,o=.4*Math.random()-.2,a=particleColors[Math.floor(Math.random()*particleColors.length)];particlesArray.push(new Particle(i,n,s,o,t,a))}}function connectParticles(){let t=1;for(let e=0;e<particlesArray.length;e++)for(let i=e;i<particlesArray.length;i++){let n=(particlesArray[e].x-particlesArray[i].x)*(particlesArray[e].x-particlesArray[i].x)+(particlesArray[e].y-particlesArray[i].y)*(particlesArray[e].y-particlesArray[i].y);n<(canvas.width/7)*(canvas.height/7)&&(t=1-n/2e4,ctx.strokeStyle=`rgba(140, 40, 230, ${t})`,ctx.lineWidth=1,ctx.beginPath(),ctx.moveTo(particlesArray[e].x,particlesArray[e].y),ctx.lineTo(particlesArray[i].x,particlesArray[i].y),ctx.stroke())}}function animateParticles(){requestAnimationFrame(animateParticles),ctx.clearRect(0,0,innerWidth,innerHeight);for(let t=0;t<particlesArray.length;t++)particlesArray[t].update();connectParticles()}window.addEventListener("resize",()=>{canvas.width=innerWidth,canvas.height=innerHeight,initParticles()}),initParticles(),animateParticles();
     </script>
 </body>
-</html>
+</html> 
